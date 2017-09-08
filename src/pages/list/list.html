@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Create Incident Event</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+    <ion-item>
+      <ion-icon name="plane" item-start color="danger"></ion-icon>
+      <ion-label>Airplane Mode</ion-label>
+      <ion-toggle color="secondary" (ionChange)="toogleClicked()"></ion-toggle>
+    </ion-item>
+
+    <button ion-item *ngFor="let contactlist of contactlists">
+      <!--<ion-icon [name]="item.icon" item-left></ion-icon>-->
+      {{contactlist.name}}
+      <div class="item-note" item-right>
+        {{contactlist.cropid}}
+      </div>
+    </button>
+  </ion-list>
+  <div *ngIf="selectedItem" padding>
+    You navigated here from <b>{{selectedItem.title}}</b>
+  </div>
+</ion-content>
