@@ -1,0 +1,12 @@
+{
+  "name": "slideMenuApp",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {},
+  "proxies": [
+    {
+      "path": "/contactlist",
+      "proxyUrl": "http://160.68.28.17:3000/contactlist"
+    }
+  ]
+}
