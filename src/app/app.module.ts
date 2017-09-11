@@ -1,36 +1,41 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { ContactlistService } from '../pages/list/contactlist.service';
+import { HttpModule } from '@angular/http'; //add for htttp promise
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { CasePage} from '../pages/case/case';
+import { SharePage} from '../pages/share/share';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    CasePage,
+    SharePage
   ],
   imports: [
+    HttpModule,//add for http promise
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    CasePage,
+    SharePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    ContactlistService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
