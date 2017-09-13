@@ -1,18 +1,26 @@
-<ion-header>
-  <ion-navbar>
-    <button start ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <label class="navCustom">Contactlist</label>
-    <label class="next">Confirm</label>
-  </ion-navbar>
-</ion-header>
+<ion-header>  
+    <ion-navbar>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button> 
+      <ion-title>
+        Contactlist
+      </ion-title>
+      <ion-buttons end>
+        <button ion-button (click)="submitCase()">
+            <label>Confirm </label>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
 
 <ion-content>
   <ion-scroll style="width:100%;height:100vh" scrollY="true">
   <ion-list scroll="true" >
-      <div id="select_all" text-right padding >
-        <label>Select All</label>
+      <div text-right padding >
+        <label (click)="checkAll()" class="bold_label">Select All</label>
+        <!-- <button [(ngModel)]="selectedAll" (click)="checkAll()" >Select All</button> -->
+        <ion-checkbox [(ngModel)]="selectedAll" (click)="checkAll()"></ion-checkbox>
       </div>
       <!-- <ion-item>
           <ion-label>SA</ion-label>
@@ -34,7 +42,7 @@
           <ion-label>CIO</ion-label>
           <ion-checkbox></ion-checkbox>
       </ion-item> -->
-    <button ion-item *ngFor="let item of contactList" (click)="itemTapped($event, item)">
+    <button ion-item *ngFor="let item of contactList">
       <!-- <ion-icon [name]="item.icon" item-left></ion-icon> -->
       <!-- {{item.name}} -->
       <!-- <div class="" item-left></div>
@@ -42,7 +50,7 @@
         {{item.name}}
       </div> -->
         <ion-label>{{item.name}}</ion-label>
-        <ion-checkbox></ion-checkbox>
+        <ion-checkbox id={{item.corpid}} [(ngModel)]="item.selected" (ionChange)="updateSelectedContact($event)"></ion-checkbox>
     </button>
   </ion-list>
   </ion-scroll>

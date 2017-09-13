@@ -13,7 +13,7 @@ import { CasePage} from '../pages/case/case';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = CasePage;
 
   pages: Array<{title: string, component: any}>;
 

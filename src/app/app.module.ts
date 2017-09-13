@@ -8,22 +8,25 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { CasePage} from '../pages/case/case';
 import { SharePage} from '../pages/share/share';
-
+import { WebService } from '../pages/service/web-service';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import {ElasticModule} from 'ng-elastic';
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
     CasePage,
-    SharePage
+    SharePage,
+    
   ],
   imports: [
     HttpModule,//add for http promise
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    ElasticModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -31,12 +34,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     ListPage,
     CasePage,
-    SharePage
+    SharePage,
+    
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    WebService
   ]
 })
 export class AppModule {}

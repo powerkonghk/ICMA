@@ -1,24 +1,33 @@
-<ion-header>
+<ion-header>  
   <ion-navbar>
-    <button ion-button menuToggle>
+    <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>
-    <label class="navCustom">New Case</label>
-    <label class="next" [navPush]="listPage">Next <ion-icon name="arrow-forward"></ion-icon></label>
-  </ion-navbar>  
+    </button> 
+    <ion-title>
+      New Case
+    </ion-title>
+    <ion-buttons end>
+      <!-- <button ion-button [navPush]="listPage"> -->
+      <button ion-button (click)="pushPage()">   
+          <label>Next </label>
+        <ion-icon class="next" name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <h4>Case Description:</h4>
   <ion-item>
-      <ion-textarea id="case_desc" placeholder="Enter a description"></ion-textarea>
+      <!-- <ion-textarea rows="15" id="case_desc" placeholder="Enter a description" [(ngModel)]="caseDescription"></ion-textarea> -->
+      <ion-textarea fz-elastic [(ngModel)]="caseDescription"></ion-textarea>
   </ion-item>
   <ion-item>
     <div padding>
       <ion-icon ios="ios-speedometer-outline" id="serverity_icon"></ion-icon>
       <label for="severity" id="serverity_label">Severity</label>
     </div>
-      <ion-segment [(ngModel)]="level">
+      <ion-segment [(ngModel)]="serverityLevel">
         <ion-segment-button value="1">
           1
         </ion-segment-button>
@@ -35,11 +44,11 @@
   </ion-item>
   <ion-item>
     <ion-label class="calendar_label"><ion-icon name="ios-calendar-outline" class="calendar_icon"></ion-icon> Date</ion-label>
-    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="myDate"></ion-datetime>
+    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="caseDate"></ion-datetime>
   </ion-item>
   <ion-item>
       <ion-label class="calendar_label"><ion-icon name="ios-calendar-outline" class="calendar_icon"></ion-icon> Time</ion-label>
-      <ion-datetime displayFormat="HH:mm" [(ngModel)]="myTime"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" [(ngModel)]="caseTime"></ion-datetime>
   </ion-item>
 
   <!-- <button ion-button full [navPush]="listPage">Select Contact</button> -->
