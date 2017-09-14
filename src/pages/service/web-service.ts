@@ -70,7 +70,7 @@ export class WebService {
             .post(url, JSON.stringify({event_id: event_id, title: title, system: system, report_by: report_by, incident_dtm: incident_dtm, 
             desc: desc, status: status, severity: severity, assigned: assigned}), {headers: this.headers})
             .toPromise()
-            .then(res => res.json().data)
+            .then(res => res.json())
             .catch(this.handleError);
     }
 

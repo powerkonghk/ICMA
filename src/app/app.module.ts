@@ -8,6 +8,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { CasePage} from '../pages/case/case';
 import { SharePage} from '../pages/share/share';
+import { ResultPage} from '../pages/result/result';
 import { WebService } from '../pages/service/web-service';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,7 +21,7 @@ import {ElasticModule} from 'ng-elastic';
     ListPage,
     CasePage,
     SharePage,
-    
+    ResultPage
   ],
   imports: [
     HttpModule,//add for http promise
@@ -35,7 +36,7 @@ import {ElasticModule} from 'ng-elastic';
     ListPage,
     CasePage,
     SharePage,
-    
+    ResultPage
   ],
   providers: [
     StatusBar,

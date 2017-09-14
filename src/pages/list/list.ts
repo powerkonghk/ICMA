@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { WebService } from '../service/web-service';
-import { SharePage } from '../share/share';
+//import { SharePage } from '../share/share';
+import { ResultPage} from '../result/result';
 
 @Component({
   selector: 'page-list',
@@ -13,10 +14,13 @@ export class ListPage {
   icons: string[];
   items: Array<{ title: string, note: string, icon: string }>;
   contactList: Array<any>;
-  sharePage = SharePage;
+  // /sharePage = SharePage;
+  resultPage = ResultPage;
   item: any;
   selectedAll: boolean;
   selectedContact: Array<any> = new Array();
+
+  submitResult: any;
 
   //selectedName: Array<any>;
 
@@ -122,7 +126,7 @@ export class ListPage {
       this.selectedContact
     );
 
-    this.webService.getPushParam();
+    //this.webService.getPushParam();
 
     var event_id = 'test_event_id';
     var title = 'test_title';
@@ -135,9 +139,28 @@ export class ListPage {
     var assigned = this.selectedContact;
 
 
-    this.webService.create(event_id, title, system, report_by, incident_dtm, desc, status, severity, assigned);
-
+    this.webService.create(event_id, title, system, report_by, incident_dtm, desc, status, severity, assigned)
+    .then(data=>{
+      this.submitResult=data;
+      console.log(this.submitResult.result);
+      if(this.submitResult.result=='success'){
+        this.navCtrl.push(ResultPage);
+      }
+      
+      // for(let item of this.submitResult){
+      //   if(item.status=='active'){
+      //     this.navCtrl.push(ResultPage);
+      //   };
+      // }
+    })
+    .catch(this.handleError);
   }
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return Promise.reject(error.message || error);
+  }
+  
   // itemTapped(event, item) {
   //   // That's right, we're pushing to ourselves!
   //   this.navCtrl.push(ListPage, {
