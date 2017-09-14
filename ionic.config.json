@@ -1,6 +1,6 @@
 {
   "name": "slideMenuApp",
-  "app_id": "",
+  "app_id": "5a72cf08",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
