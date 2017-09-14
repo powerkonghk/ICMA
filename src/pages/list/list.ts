@@ -32,7 +32,7 @@ export class ListPage {
     // console.log(caseDate);
     // console.log(caseTime);
 
-    webService.getPushParam();
+    //webService.getPushParam();
 
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
@@ -100,10 +100,10 @@ export class ListPage {
     for (let item of this.contactList) {
       if (item.selected == true) {
         this.selectedContact.push(item.corpid);
-        console.log("::::" + item.corpid + "::::" + item.selected);
+        //console.log("::::" + item.corpid + "::::" + item.selected);
       }
     }
-    console.log("array!"+this.selectedContact);
+    //console.log("array!"+this.selectedContact);
   }
 
   submitCase() {
@@ -114,6 +114,28 @@ export class ListPage {
     //} 
     //this.webService.pushSelectedContact(this.selectedContact);
     //this.webService.getSelectedContact();
+    this.webService.pushParam(
+      this.webService.getCaseDesc(),
+      this.webService.getServerityLevel(),
+      this.webService.getCaseDate(),
+      this.webService.getCaseTime(),
+      this.selectedContact
+    );
+
+    this.webService.getPushParam();
+
+    var event_id = 'test_event_id';
+    var title = 'test_title';
+    var system = 'test_system';
+    var report_by = 'test_report_by';
+    var incident_dtm = new Date().toString();
+    var desc =  this.webService.getCaseDesc();
+    var status = 'active';
+    var severity = this.webService.getServerityLevel();
+    var assigned = this.selectedContact;
+
+
+    this.webService.create(event_id, title, system, report_by, incident_dtm, desc, status, severity, assigned);
 
   }
   // itemTapped(event, item) {

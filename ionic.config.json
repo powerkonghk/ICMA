@@ -9,6 +9,14 @@
     {
       "path": "/contactlist",
       "proxyUrl": "http://192.168.8.101:3000/contactlist"
+    },
+    {
+      "path": "/event/create",
+      "proxyUrl": "http://192.168.8.100:3000/event/create"
+    },
+    {
+      "path": "/event",
+      "proxyUrl": "http://192.168.8.100:3000/event"
     }
   ]
 }

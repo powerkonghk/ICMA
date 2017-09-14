@@ -29,7 +29,7 @@ export class CasePage {
     //   caseDate: this.caseDate,
     //   caseTime: this.caseTime
     // });
-    this.webService.pushParam(this.caseDescription,this.serverityLevel,this.caseDate,this.caseTime);
+    this.webService.pushParam(this.caseDescription,this.serverityLevel,this.caseDate,this.caseTime,null);
     this.navCtrl.push(ListPage);   
   }
 }
