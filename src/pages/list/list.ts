@@ -144,7 +144,8 @@ export class ListPage {
       this.submitResult=data;
       console.log(this.submitResult.result);
       if(this.submitResult.result=='success'){
-        this.navCtrl.push(ResultPage);
+        //this.navCtrl.push(ResultPage);
+        this.navCtrl.setRoot(ResultPage);
       }
       
       // for(let item of this.submitResult){

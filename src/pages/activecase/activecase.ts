@@ -3,12 +3,12 @@ import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'result.html'
+  templateUrl: 'activecase.html'
 })
-export class ResultPage {
+export class ActiveCasePage {
 
   constructor(public navCtrl: NavController) {
-    
+
   }
 
 }

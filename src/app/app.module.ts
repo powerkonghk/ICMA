@@ -7,6 +7,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { CasePage} from '../pages/case/case';
+import { ActiveCasePage} from '../pages/activecase/activecase';
 import { SharePage} from '../pages/share/share';
 import { ResultPage} from '../pages/result/result';
 import { WebService } from '../pages/service/web-service';
@@ -20,8 +21,9 @@ import {ElasticModule} from 'ng-elastic';
     HomePage,
     ListPage,
     CasePage,
+    ActiveCasePage,
     SharePage,
-    ResultPage
+    ResultPage,
   ],
   imports: [
     HttpModule,//add for http promise
@@ -35,6 +37,7 @@ import {ElasticModule} from 'ng-elastic';
     HomePage,
     ListPage,
     CasePage,
+    ActiveCasePage,
     SharePage,
     ResultPage
   ],

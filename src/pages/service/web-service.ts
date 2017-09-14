@@ -79,4 +79,12 @@ export class WebService {
         return Promise.reject(error.message || error);
     }
 
+    getEvent() : Promise<any> {
+        var url ='http://192.168.8.100:3000/event'
+        return this.http.get(url)
+        .toPromise()
+        .then(response => response.json())
+        .catch(this.handleError);
+    }
+
 }
