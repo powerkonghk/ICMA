@@ -9,6 +9,7 @@ import { CasePage} from '../pages/case/case';
 import { ActiveCasePage} from '../pages/activecase/activecase';
 import { ResultPage} from '../pages/result/result';
 import { WebService } from '../pages/service/web-service';
+import { SettingPage} from '../pages/setting/setting';
 
 @Component({
   templateUrl: 'app.html',
@@ -17,7 +18,7 @@ import { WebService } from '../pages/service/web-service';
 export class MyApp implements OnInit{
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any=SettingPage;
   event: any;
   pages: Array<{title: string, component: any}>;
 
@@ -26,11 +27,12 @@ export class MyApp implements OnInit{
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage },
+      //{ title: 'Home', component: HomePage },
+      //{ title: 'List', component: ListPage },
       { title: 'New Case', component: CasePage},
       { title: 'Active Case', component: ActiveCasePage},
-      { title: 'Result', component: ResultPage}
+      { title: 'Setting', component: SettingPage}
+      //{ title: 'Result', component: ResultPage}
     ];
 
   }
@@ -54,12 +56,26 @@ export class MyApp implements OnInit{
     this.webService.getEvent()
     .then(data => {
       this.event = data;
-      console.log(data);
-      for (let item of this.event){
+      for (let item of this.event){   
         if(item.status == 'inactived'){
+          this.rootPage = CasePage;
           this.nav.setRoot(CasePage);
           //this.openPage(this.pages[2]);
          } else {
+           this.webService.setEventDetail(
+              item._id, 
+              item.event_id,
+              item.title, 
+              item.system, 
+              item.report_by, 
+              item.incident_dtm, 
+              item.desc, 
+              item.status, 
+              item.severity, 
+              item.assigned, 
+              item.createDtm
+           );
+           this.rootPage = ActiveCasePage;
            this.nav.setRoot(ActiveCasePage);
            //this.openPage(this.pages[3]);
          }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { WebService } from '../service/web-service';
 //import { SharePage } from '../share/share';
 import { ResultPage} from '../result/result';
@@ -24,9 +24,9 @@ export class ListPage {
 
   //selectedName: Array<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private webService: WebService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private webService: WebService, private alertCtrl: AlertController) {
     this.getContactList();
-
+    
     // let caseDesc = navParams.get('caseDesc');
     // let serverity = navParams.get('serverityLevel');
     // let caseDate = navParams.get('caseDate');
@@ -76,18 +76,19 @@ export class ListPage {
     for (let item of this.contactList) {
       item.selected = this.selectedAll;
     }
+    this.updateSelectedContact();
   }
 
 
   getContactList() {
     //console.log(event.target.value);
     //if(event.target.value.length > 2) {
-    this.webService.getService().subscribe(
+    this.webService.getContactListService().subscribe(
       data => {
         this.contactList = data;
-        //console.log(data);
       },
       err => {
+        this.loadListFail();
         console.log(err);
       },
       () => console.log('Data fetched')
@@ -104,7 +105,7 @@ export class ListPage {
     for (let item of this.contactList) {
       if (item.selected == true) {
         this.selectedContact.push(item.corpid);
-        //console.log("::::" + item.corpid + "::::" + item.selected);
+        console.log("::::" + item.corpid + "::::" + item.selected);
       }
     }
     //console.log("array!"+this.selectedContact);
@@ -118,9 +119,10 @@ export class ListPage {
     //} 
     //this.webService.pushSelectedContact(this.selectedContact);
     //this.webService.getSelectedContact();
+    console.log("xxxxxx"+this.selectedContact);
     this.webService.pushParam(
       this.webService.getCaseDesc(),
-      this.webService.getServerityLevel(),
+      this.webService.getSeverityLevel(),
       this.webService.getCaseDate(),
       this.webService.getCaseTime(),
       this.selectedContact
@@ -135,11 +137,11 @@ export class ListPage {
     var incident_dtm = new Date().toString();
     var desc =  this.webService.getCaseDesc();
     var status = 'active';
-    var severity = this.webService.getServerityLevel();
-    var assigned = this.selectedContact;
+    var severity = this.webService.getSeverityLevel();
+    //var assigned = this.selectedContact;
 
 
-    this.webService.create(event_id, title, system, report_by, incident_dtm, desc, status, severity, assigned)
+    this.webService.create(event_id, title, system, report_by, incident_dtm, desc, status, severity, this.selectedContact)
     .then(data=>{
       this.submitResult=data;
       console.log(this.submitResult.result);
@@ -156,6 +158,16 @@ export class ListPage {
     })
     .catch(this.handleError);
   }
+
+  loadListFail(){
+    let alert = this.alertCtrl.create({
+      title: 'Contact List Fail',
+      subTitle: 'this may cause by failure of the network connection',
+      buttons:['Close']
+    });
+    alert.present();
+  }
+
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
