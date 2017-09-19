@@ -129,7 +129,8 @@ export class WebService {
     
     create(event_id: string, title: string, system: string, report_by: string, incident_dtm: string, 
         desc: string, status: string, severity: string, assigned: Array<any>): Promise<Event> {
-        var url = '/event/create'
+        // var url = '/event/create'
+        var url = "http://192.168.8.100:3000/event/create";
         return this.http
             .post(url, JSON.stringify({event_id: event_id, title: title, system: system, report_by: report_by, incident_dtm: incident_dtm, 
             desc: desc, status: status, severity: severity, assigned: assigned}), {headers: this.headers})
