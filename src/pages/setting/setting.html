@@ -10,12 +10,20 @@
 <ion-content padding>
     <ion-list>       
       <ion-item>
-        <ion-label fixed>Corp ID:</ion-label>
-        <ion-input type="text" value="192.168.8.105:3000"></ion-input>
+        <ion-label fixed>IP Address:</ion-label>
+        <ion-input type="text" [(ngModel)]="serverIP"></ion-input>
       </ion-item>        
       <ion-item>
-        <ion-label fixed>IP Address:</ion-label>
-        <ion-input type="text" value="kwk826"></ion-input>
+        <ion-label fixed>Corp ID:</ion-label>
+        <ion-input type="text" [(ngModel)]="userCorpID"></ion-input>
       </ion-item>
     </ion-list>
+  <div padding>
+      <button ion-button full (click)="setConfig()">Set Config</button>
+  </div>
+  
+  <div padding>
+      <button ion-button full (click)="sendSMS()">Send SMS</button>
+  </div>
+  
 </ion-content>

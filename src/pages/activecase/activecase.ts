@@ -19,6 +19,7 @@ export class ActiveCasePage {
   severity: string;
   assigned: string;
   createDtm: string;
+  assignedList: Array<any>;
 
   constructor(public navCtrl: NavController, private webService: WebService) {
     
@@ -30,7 +31,26 @@ export class ActiveCasePage {
       this.desc = this.webService.getDesc();
       this.status = this.webService.getStatus();
       this.severity = this.webService.getSeverity();
-      this.assigned = this.webService.getAssigned();
+      this.assignedList = this.webService.getAssigned();
       this.createDtm = this.webService.getCreateDtm();
+
+      // /this.getAssignedList();
+  }
+
+
+
+  getAssignedList(){
+    for (let person of this.assignedList) {
+      console.log("person"+person.corp_id);
+      console.log("person"+person.name);
+      console.log("person"+person.status);
+      console.log("person"+person.last_upd_dtm);
+      //this.assignedList = this.assigned;
+      //this.assignedList.push({corpid:person});
+    }
+    //this.assignedList = this.assigned.split(",");
+    //console.log(this.assigned.split(","));
+    //this.assignedList = this.assigned.split(",");
+    //console.log(tempArray);
   }
 }

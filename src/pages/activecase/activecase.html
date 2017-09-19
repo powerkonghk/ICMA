@@ -8,14 +8,25 @@
 </ion-header>
 
 <ion-content padding>
- <ion-item><ion-label left>Title：</ion-label><ion-label right>{{title}}</ion-label></ion-item>
- <ion-item><ion-label left>Event ID:</ion-label><ion-label right>{{event_id}}</ion-label></ion-item>
- <ion-item><ion-label left>Status:</ion-label><ion-label right>{{status}}</ion-label></ion-item>
- <ion-item><ion-label left>Severity:</ion-label><ion-label right>{{severity}}</ion-label></ion-item>
- <ion-item><ion-label left>Create Date:</ion-label><ion-label right>{{createDtm}}</ion-label></ion-item>
- <ion-item><ion-label left>Incident Date:</ion-label><ion-label right>{{incident_dtm}}</ion-label></ion-item>
- <ion-item><ion-label left>Description:</ion-label><ion-label right>{{desc}}</ion-label></ion-item>
- <ion-item><ion-label left>Reoprt By:</ion-label><ion-label right>{{report_by}}</ion-label></ion-item>
+<ion-list>
+  <ion-item><ion-label left>Title：</ion-label><ion-label right>{{title}}</ion-label></ion-item>
+  <ion-item><ion-label left>Event ID:</ion-label><ion-label right>{{event_id}}</ion-label></ion-item>
+  <ion-item><ion-label left>Status:</ion-label><ion-label right>{{status}}</ion-label></ion-item>
+  <ion-item><ion-label left>Severity:</ion-label><ion-label right>{{severity}}</ion-label></ion-item>
+  <ion-item><ion-label left>Create Date:</ion-label><ion-label right>{{createDtm | date:'dd-MMM-yyyy HH:mm'}}</ion-label></ion-item>
+  <ion-item><ion-label left>Incident Date:</ion-label><ion-label right>{{incident_dtm | date:'dd-MMM-yyyy HH:mm'}}</ion-label></ion-item>
+  <ion-item><ion-label left>Description:</ion-label><ion-label right>{{desc}}</ion-label></ion-item>
+  <ion-item><ion-label left>Reoprt By:</ion-label><ion-label right>{{report_by}}</ion-label></ion-item>
+</ion-list>
+<ion-list class="assigned-list">
+  <ion-item><ion-label left>Assigned:</ion-label></ion-item>
+  <ion-item *ngFor="let person of assignedList">
+      <ion-label>{{person.name}} <div class="assigned_corpid">({{person.corp_id}})</div></ion-label> 
+      <ion-label class="assigned_datetime" *ngIf="person.status =='ACK'" ><ion-icon class="ackIcon" name="ios-checkmark-circle"></ion-icon>{{ person.last_upd_dtm | date:' dd-MMM HH:mm'}}</ion-label>
+      <ion-label *ngIf="person.status=='NEW'" ><ion-icon class="clockIcon" name="md-time"></ion-icon></ion-label>
+      <!-- <ion-checkbox id={{item.corpid}} [(ngModel)]="item.selected" (ionChange)="updateSelectedContact($event)"></ion-checkbox> -->
+  </ion-item>
+</ion-list>
  <div padding>
   <button ion-button full>Close Case</button>
  </div>

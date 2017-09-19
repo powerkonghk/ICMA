@@ -2,6 +2,7 @@ import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/timeout';
 import 'rxjs/add/operator/toPromise';
+import {SettingPage} from '../setting/setting';
  
 export class WebService {  
     static get parameters() {
@@ -24,10 +25,33 @@ export class WebService {
     desc: string;
     status: string;
     severity: string;
-    assigned: string;
+    assigned: Array<any>;
     createDtm: string;
 
-	constructor(private http:Http) {
+    userCorpID: string;
+    serverIP: string;
+
+	constructor(private http:Http, private settingPage: SettingPage) {
+        //this.serverIP = this.settingPage.getServerIP();
+        // /this.userCorpID = this.settingPage.getUserCorpID();
+        this.serverIP = "192.168.8.106:3000"
+        this.userCorpID = "kwk826";
+    }
+    
+    setUserCorpID(userCorpID){
+        this.userCorpID = userCorpID;
+    }
+
+    setServerIP(serverIP){
+        this.serverIP = serverIP;
+    }
+
+    getServerIP(){
+        return this.serverIP;
+    }
+
+    getUserCorpID(){
+        return this.userCorpID;
     }
 
     setEventDetail(_id, event_id, title, system, report_by, incident_dtm, desc, status, severity, assigned, createDtm){
@@ -119,7 +143,7 @@ export class WebService {
     getContactListService() {
         //var url = 'http://api.themoviedb.org/3/search/movie?query=&query=' + encodeURI('starwar') + '&api_key=5fbddf6b517048e25bc3ac1bbeafb919';
         //var url = 'http://jsonplaceholder.typicode.com/users/';
-        var url ='http://192.168.8.105:3000/contactlist'
+        var url ='http://'+this.getServerIP()+'/contactlist'
         var response = this.http.get(url).timeout(5000).map(res => res.json());
 		return response;
     }
@@ -145,7 +169,7 @@ export class WebService {
     }
 
     getEvent() : Promise<any> {
-        var url ='http://192.168.8.105:3000/event'
+        var url ='http://'+this.serverIP+'/event'
         return this.http.get(url)
         .toPromise()
         .then(response => response.json())
@@ -153,7 +177,7 @@ export class WebService {
     }
 
     getContactList() : Promise<any> {
-        var url ='http://192.168.8.105:3000/contactlist'
+        var url ='http://'+this.serverIP+'/contactlist'
         return this.http.get(url)
         .toPromise()
         .then(response => response.json())

@@ -13,7 +13,7 @@ import { SettingPage} from '../pages/setting/setting';
 
 @Component({
   templateUrl: 'app.html',
-  providers:[WebService]
+  providers:[WebService, SettingPage]
 })
 export class MyApp implements OnInit{
   @ViewChild(Nav) nav: Nav;
@@ -75,7 +75,7 @@ export class MyApp implements OnInit{
               item.assigned, 
               item.createDtm
            );
-           this.rootPage = ActiveCasePage;
+           //this.rootPage = ActiveCasePage;
            this.nav.setRoot(ActiveCasePage);
            //this.openPage(this.pages[3]);
          }

@@ -48,7 +48,8 @@ import {ElasticModule} from 'ng-elastic';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    WebService
+    WebService,
+    SettingPage
   ]
 })
 export class AppModule {}
