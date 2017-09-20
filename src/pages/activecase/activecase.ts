@@ -51,14 +51,17 @@ export class ActiveCasePage {
               item.createDtm
            );
           }
+          this.loadCase();
         }).catch();
-        this.loadCase();
+        
         refresher.complete();
       },2000);
   }
 
   ackEvent(){
    this.webService.ackEvent(this.event_id,this.userCorpID);
+   this.loadCase();
+   this.navCtrl.setRoot(ActiveCasePage);
   }
 
   closeEvent(){
@@ -81,7 +84,7 @@ export class ActiveCasePage {
     this.serverIP = this.webService.getServerIP();
 
     for (let person of this.assignedList){ 
-      if(person.status == 'NEW' && person.corp_id == this.userCorpID){
+      if(person.status == 'NEW' && person.corpid == this.userCorpID){
         this.ackCase=true;
       }
     }

@@ -79,14 +79,7 @@ export class WebService {
         this.selectedContact = selectedContact;
     }
 
-    getPushParam(){
-        console.log("##########");
-        console.log(this.caseDesc);
-        console.log(this.severityLevel);
-        console.log(this.caseDate);
-        console.log(this.caseTime);
-        console.log(this.selectedContact);
-    }
+
     getCaseDesc(){
         return this.caseDesc;
     }
@@ -143,7 +136,7 @@ export class WebService {
     getContactListService() {
         //var url = 'http://api.themoviedb.org/3/search/movie?query=&query=' + encodeURI('starwar') + '&api_key=5fbddf6b517048e25bc3ac1bbeafb919';
         //var url = 'http://jsonplaceholder.typicode.com/users/';
-        var url ='http://'+this.getServerIP()+'/contactlist'
+        var url ='http://'+this.serverIP+'/contactlist'
         var response = this.http.get(url).timeout(5000).map(res => res.json());
 		return response;
     }
@@ -154,7 +147,8 @@ export class WebService {
     create(event_id: string, title: string, system: string, report_by: string, incident_dtm: string, 
         desc: string, status: string, severity: string, assigned: Array<any>): Promise<Event> {
         // var url = '/event/create'
-        var url = 'http://'+this.getServerIP()+'/event/create';
+        //var url = 'http://'+this.serverIP+'/event/create';
+        var url = '/event/create';
         return this.http
             .post(url, JSON.stringify({event_id: event_id, title: title, system: system, report_by: report_by, incident_dtm: incident_dtm, 
             desc: desc, status: status, severity: severity, assigned: assigned}), {headers: this.headers})
@@ -169,7 +163,8 @@ export class WebService {
     }
 
     getEvent() : Promise<any> {
-        var url ='http://'+this.serverIP+'/event'
+        //var url ='http://'+this.serverIP+'/event'
+        var url ='/event'
         return this.http.get(url)
         .toPromise()
         .then(response => response.json())
@@ -177,26 +172,33 @@ export class WebService {
     }
 
     getContactList() : Promise<any> {
-        var url ='http://'+this.serverIP+'/contactlist'
+        //var url ='http://'+this.serverIP+'/contactlist'
+        var url ='/contactlist'
         return this.http.get(url)
         .toPromise()
         .then(response => response.json())
         .catch(this.handleError);
     }
 
-    ackEvent(event_id,corp_id){
-        // var url = 'http://'+this.getServerIP+'/event/update'+event_id+'/assigned/'+corp_id+'/ack';
-        // return this.http.get(url)
-        // .toPromise()
-        // .then(response => response.json())
-        // .catch(this.handleError);
+    ackEvent(userCorpID,status): Promise<Event> {
+        //var url = 'http://'+this.serverIP+'/event/update/assigned/update';
+        var url = '/event/update/assigned/update';
+        console.log("ack url"+ url);
+        console.log("corpID"+this.userCorpID);
+        return this.http.post(url, JSON.stringify({corpid: this.userCorpID, status: 'ACK', event_id: this.event_id}), {headers: this.headers})
+        .toPromise()
+        .then(response => {response.json();console.log(response.json());})
+        .catch(this.handleError);
     }
 
-    closeEvent(event_id){
-        // var url = 'http://'+this.getServerIP+'/event/'+event_id+'/close/';
-        // return this.http.get(url)
-        // .toPromise()
-        // .then(response => response.json())
-        // .catch(this.handleError);
+    closeEvent(event_id): Promise<Event> {
+        //var url = 'http://'+this.serverIP+'/event/close';
+        var url = '/event/close';
+        //console.log("close url"+url);
+        console.log("event_id:"+this.event_id);
+        return this.http.post(url, JSON.stringify({event_id: this.event_id}), {headers: this.headers})
+        .toPromise()
+        .then(response => response.json())
+        .catch(this.handleError);
     }
 }

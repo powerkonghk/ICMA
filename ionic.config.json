@@ -6,6 +6,27 @@
     "cordova": {}
   },
   "proxies": [
-
+    {
+      "path": "/contactlist",
+      "proxyUrl": "http://160.68.62.22:3000/contactlist"
+    },
+    
+    
+    {
+      "path": "/event/create",
+      "proxyUrl": "http://160.68.62.22:3000/event/create"
+    },
+    {
+      "path": "/event",
+      "proxyUrl": "http://160.68.62.22:3000/event"
+    },
+    {
+      "path": "/event/close",
+      "proxyUrl": "http://160.68.62.22:3000/event/close"
+    },
+    {
+      "path": "/event/update/assigned/update",
+      "proxyUrl": "http://160.68.62.22:3000/event/update/assigned/update"
+    }
   ]
 }

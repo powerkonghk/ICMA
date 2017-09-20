@@ -104,8 +104,9 @@ export class ListPage {
     this.selectedContact = new Array();
     for (let item of this.contactList) {
       if (item.selected == true) {
-        this.selectedContact.push(item.corpid);
-        console.log("::::" + item.corpid + "::::" + item.selected);
+        //this.selectedContact.push(item.corpid);
+        this.selectedContact.push({corpid:item.corpid});
+        //console.log("::::" + item.corpid + "::::" + item.selected);
       }
     }
     //console.log("array!"+this.selectedContact);
@@ -119,7 +120,6 @@ export class ListPage {
     //} 
     //this.webService.pushSelectedContact(this.selectedContact);
     //this.webService.getSelectedContact();
-    console.log("xxxxxx"+this.selectedContact);
     this.webService.pushParam(
       this.webService.getCaseDesc(),
       this.webService.getSeverityLevel(),
