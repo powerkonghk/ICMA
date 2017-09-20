@@ -34,7 +34,7 @@ export class WebService {
 	constructor(private http:Http, private settingPage: SettingPage) {
         //this.serverIP = this.settingPage.getServerIP();
         // /this.userCorpID = this.settingPage.getUserCorpID();
-        this.serverIP = "192.168.8.106:3000"
+        this.serverIP = "160.68.62.22:3000"
         this.userCorpID = "kwk826";
     }
     
@@ -67,7 +67,7 @@ export class WebService {
         this.assigned = assigned;
         this.createDtm = createDtm;
     }
-
+    
 
 
 
@@ -154,7 +154,7 @@ export class WebService {
     create(event_id: string, title: string, system: string, report_by: string, incident_dtm: string, 
         desc: string, status: string, severity: string, assigned: Array<any>): Promise<Event> {
         // var url = '/event/create'
-        var url = "http://192.168.8.100:3000/event/create";
+        var url = 'http://'+this.getServerIP()+'/event/create';
         return this.http
             .post(url, JSON.stringify({event_id: event_id, title: title, system: system, report_by: report_by, incident_dtm: incident_dtm, 
             desc: desc, status: status, severity: severity, assigned: assigned}), {headers: this.headers})
@@ -163,7 +163,7 @@ export class WebService {
             .catch(this.handleError);
     }
 
-    private handleError(error: any): Promise<any> {
+    public handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     }
@@ -184,4 +184,19 @@ export class WebService {
         .catch(this.handleError);
     }
 
+    ackEvent(event_id,corp_id){
+        // var url = 'http://'+this.getServerIP+'/event/update'+event_id+'/assigned/'+corp_id+'/ack';
+        // return this.http.get(url)
+        // .toPromise()
+        // .then(response => response.json())
+        // .catch(this.handleError);
+    }
+
+    closeEvent(event_id){
+        // var url = 'http://'+this.getServerIP+'/event/'+event_id+'/close/';
+        // return this.http.get(url)
+        // .toPromise()
+        // .then(response => response.json())
+        // .catch(this.handleError);
+    }
 }

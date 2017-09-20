@@ -20,37 +20,70 @@ export class ActiveCasePage {
   assigned: string;
   createDtm: string;
   assignedList: Array<any>;
+  
+  userCorpID : string;
+  serverIP: string;
+  ackCase: boolean;
+
+  event: any;
 
   constructor(public navCtrl: NavController, private webService: WebService) {
-    
-      this._id=this.webService.getID();
-      this.event_id = this.webService.getEventID();
-      this.title = this.webService.getEventTitle();
-      this.report_by = this.webService.getReportBy();
-      this.incident_dtm = this.webService.getIncidentDtm();
-      this.desc = this.webService.getDesc();
-      this.status = this.webService.getStatus();
-      this.severity = this.webService.getSeverity();
-      this.assignedList = this.webService.getAssigned();
-      this.createDtm = this.webService.getCreateDtm();
+    this.loadCase();
 
-      // /this.getAssignedList();
   }
 
+  doRefresh(refresher) {
+      setTimeout(()=>{
+        this.webService.getEvent().then(data => {
+          this.event = data;
+          for (let item of this.event){
+            this.webService.setEventDetail(
+              item._id, 
+              item.event_id,
+              item.title, 
+              item.system, 
+              item.report_by, 
+              item.incident_dtm, 
+              item.desc, 
+              item.status, 
+              item.severity, 
+              item.assigned, 
+              item.createDtm
+           );
+          }
+        }).catch();
+        this.loadCase();
+        refresher.complete();
+      },2000);
+  }
 
+  ackEvent(){
+   this.webService.ackEvent(this.event_id,this.userCorpID);
+  }
 
-  getAssignedList(){
-    for (let person of this.assignedList) {
-      console.log("person"+person.corp_id);
-      console.log("person"+person.name);
-      console.log("person"+person.status);
-      console.log("person"+person.last_upd_dtm);
-      //this.assignedList = this.assigned;
-      //this.assignedList.push({corpid:person});
+  closeEvent(){
+      this.webService.closeEvent(this.event_id);
+  }
+
+  loadCase(){
+    this._id=this.webService.getID();
+    this.event_id = this.webService.getEventID();
+    this.title = this.webService.getEventTitle();
+    this.report_by = this.webService.getReportBy();
+    this.incident_dtm = this.webService.getIncidentDtm();
+    this.desc = this.webService.getDesc();
+    this.status = this.webService.getStatus();
+    this.severity = this.webService.getSeverity();
+    this.assignedList = this.webService.getAssigned();
+    this.createDtm = this.webService.getCreateDtm();
+
+    this.userCorpID = this.webService.getUserCorpID();
+    this.serverIP = this.webService.getServerIP();
+
+    for (let person of this.assignedList){ 
+      if(person.status == 'NEW' && person.corp_id == this.userCorpID){
+        this.ackCase=true;
+      }
     }
-    //this.assignedList = this.assigned.split(",");
-    //console.log(this.assigned.split(","));
-    //this.assignedList = this.assigned.split(",");
-    //console.log(tempArray);
   }
 }
