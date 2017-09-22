@@ -30,6 +30,7 @@ export class WebService {
 
     userCorpID: string;
     serverIP: string;
+    ackResult: any;
 
 	constructor(private http:Http, private settingPage: SettingPage) {
         //this.serverIP = this.settingPage.getServerIP();
@@ -183,11 +184,9 @@ export class WebService {
     ackEvent(userCorpID,status): Promise<Event> {
         //var url = 'http://'+this.serverIP+'/event/update/assigned/update';
         var url = '/event/update/assigned/update';
-        console.log("ack url"+ url);
-        console.log("corpID"+this.userCorpID);
         return this.http.post(url, JSON.stringify({corpid: this.userCorpID, status: 'ACK', event_id: this.event_id}), {headers: this.headers})
         .toPromise()
-        .then(response => {response.json();console.log(response.json());})
+        .then(response => {response.json();this.ackResult = response.json().result; })
         .catch(this.handleError);
     }
 

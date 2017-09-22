@@ -29,10 +29,11 @@
       <ion-label *ngIf="person.status=='NEW'" ><ion-icon class="clockIcon" name="md-time"></ion-icon></ion-label>
       <!-- <ion-checkbox id={{item.corpid}} [(ngModel)]="item.selected" (ionChange)="updateSelectedContact($event)"></ion-checkbox> -->
   </ion-item>
+
 </ion-list>
  <div padding>
-    <button *ngIf="report_by != userCorpID && ackCase== true" ion-button full (click)="ackEvent()">Acknowledge Case</button>
-  <button *ngIf="report_by == userCorpID" ion-button full (click)="closeEvent()">Close Case</button>
+    <button *ngIf="report_by != userCorpID && ackCase== true && assignedList.indexOf(userCorpID)> -1 " ion-button full (click)="ackEvent()">Acknowledge Case</button>
+  <button *ngIf="report_by == userCorpID" ion-button full (click)="confirmCloseCase()">Close Case</button>
 
  </div>
 </ion-content>
