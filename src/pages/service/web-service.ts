@@ -3,6 +3,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/timeout';
 import 'rxjs/add/operator/toPromise';
 import {SettingPage} from '../setting/setting';
+
  
 export class WebService {  
     static get parameters() {
@@ -200,4 +201,37 @@ export class WebService {
         .then(response => response.json())
         .catch(this.handleError);
     }
+
+
+    // confirmCloseCase(){
+    //     let confirm = this.alertCtrl.create({
+    //       title: 'Close current case',
+    //       message: 'Do you really want to close the case?',
+    //       buttons:[
+    //         {
+    //           text:'Confirm',
+    //           handler:() => {
+
+    //           }
+    //         },
+    //         {
+    //           text:'Cancel',
+    //           role: 'cancel',
+    //           handler:() => {
+    //           }
+    //         }
+    //       ]
+    //     });
+    //     confirm.present();
+    //   }
+
+
+    // showAlert(alertMsg){
+    //     let alert = this.alertCtrl.create({
+    //       //title: alertMsg,
+    //       subTitle: alertMsg,
+    //       buttons:['Close']
+    //     });
+    //     alert.present();
+    //   }
 }

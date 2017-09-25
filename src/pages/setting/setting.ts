@@ -24,7 +24,7 @@ export class SettingPage {
   setConfig(){
     this.webService.setServerIP(this.serverIP);
     this.webService.setUserCorpID(this.userCorpID);
-    this.presentToast()
+    this.presentToast();
   }
 
   presentToast(){

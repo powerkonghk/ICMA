@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController } from 'ionic-angular';
 import { WebService } from '../service/web-service';
 
 @Component({
@@ -27,7 +27,7 @@ export class ActiveCasePage {
 
   event: any;
 
-  constructor(public navCtrl: NavController, private webService: WebService, private loadingCtrl: LoadingController,private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, private webService: WebService, private loadingCtrl: LoadingController, private toastCtrl: ToastController) {
     this.reloadData();
     this.loadCase();
   }
@@ -43,28 +43,27 @@ export class ActiveCasePage {
     loading.present();
   }
 
-reloadData(){
-  this.webService.getEvent().then(data => {
-    this.event = data;
-    for (let item of this.event){
-      this.webService.setEventDetail(
-        item._id, 
-        item.event_id,
-        item.title, 
-        item.system, 
-        item.report_by, 
-        item.incident_dtm, 
-        item.desc, 
-        item.status, 
-        item.severity, 
-        item.assigned, 
-        item.createDtm
-     );
-    }
-    this.loadCase();
-  }).catch();
-  
-}
+  reloadData(){
+    this.webService.getEvent().then(data => {
+      this.event = data;
+      for (let item of this.event){
+        this.webService.setEventDetail(
+          item._id, 
+          item.event_id,
+          item.title, 
+          item.system, 
+          item.report_by, 
+          item.incident_dtm, 
+          item.desc, 
+          item.status, 
+          item.severity, 
+          item.assigned, 
+          item.createDtm
+        );
+      }
+      this.loadCase();
+    }).catch();    
+  }
   doRefresh(refresher) {
       setTimeout(()=>{
         this.reloadData();
@@ -78,21 +77,19 @@ reloadData(){
     this.webService.ackEvent(this.event_id,this.userCorpID).then(()=>{
       if(this.webService.ackResult == 'success'){
         this.ackCase = false;
-        this.showAlert("Case Acknowledged!");
+        this.presentToast("Case Acknowledged!");
       }else{
-        this.ackCase = true;
-        this.showAlert("Failed to Acknowledge!");
+        this.presentToast("Failed to Acknowledge!");
       }
-    });
+    });    
     this.doRefresh(null);
   }
 
-  // closeEvent(){
-  //     this.webService.closeEvent(this.event_id);
-  //     this.showAlert("Case Closed!");
-  //     this.doRefresh(null);
-  //     //this.runLoader();
-  // }
+  closeEvent(){
+      this.webService.closeEvent(this.event_id);
+      this.doRefresh(null);
+      this.runLoader();
+  }
 
   loadCase(){
     this._id=this.webService.getID();
@@ -116,36 +113,13 @@ reloadData(){
     }
   }
 
-  showAlert(alertMsg){
-    let alert = this.alertCtrl.create({
-      //title: alertMsg,
-      subTitle: alertMsg,
-      buttons:['Close']
-    });
-    alert.present();
-  }
 
-  confirmCloseCase(){
-    let confirm = this.alertCtrl.create({
-      title: 'Close current case',
-      message: 'Do you really want to close the case?',
-      buttons:[
-        {
-          text:'Confirm',
-          handler:() => {
-            this.webService.closeEvent(this.event_id);
-            this.runLoader();
-            this.doRefresh(null);
-          }
-        },
-        {
-          text:'Cancel',
-          role: 'cancel',
-          handler:() => {
-          }
-        }
-      ]
+  presentToast(toastMsg){
+    let toast = this.toastCtrl.create({
+      message: toastMsg,
+      duration: 3000,
+      position: 'bottom'
     });
-    confirm.present();
+    toast.present();
   }
 }
